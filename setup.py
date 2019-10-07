@@ -1,10 +1,6 @@
 import os
 import setuptools
 
-
-def read(fname):
-    return open(os.path.join(os.path.dirname(__file__), fname)).read()
-
 REQUIRES = []
 with open('requirements.txt') as f:
     for line in f:
@@ -23,7 +19,6 @@ setuptools.setup(
     author="Martin Dojcak",
     author_email="martin.dojcak@lablabs.io",
     description="Kubernetes external endpoint manager",
-    long_description=read('README.md'),
     long_description_content_type="text/markdown",
     url="https://github.com/lablabs/kube-endpoint-manager",
     packages=setuptools.find_packages(),
