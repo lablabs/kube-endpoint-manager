@@ -110,7 +110,7 @@ class Endpoint:
         name (Optional[str]): kubernetes endpoint name
         namespace (Optional[str]): kubernetes endpoint namespace
         ports (List[V1EndpointPort]): kubernetes endpoint subset ports
-        addresses (Optional[List[V1EndpointAddress]]): get addresses (also setter)
+        addresses (List[V1EndpointAddress]): get addresses (also setter)
 
     Methods:
         refresh (None): Refresh in memory kubernetes endpoint object
@@ -194,16 +194,16 @@ class Endpoint:
         self._endpoint = self._read_endpoint()
 
     @property
-    def addresses(self) -> Optional[List[V1EndpointAddress]]:
+    def addresses(self) -> List[V1EndpointAddress]:
         """Get/Set kubernetes endpoint subset addresses
 
         Patch kubernetes endpoint object with new list of subset addresses
 
         Returns:
-            (Optional[List[V1EndpointAddress]]): kubernetes endpoint subset addresses
+            (List[V1EndpointAddress]): kubernetes endpoint subset addresses
         """
         if not self._endpoint:
-            return None
+            return []
 
         return list(self._endpoint.subsets[0].addresses)
 
