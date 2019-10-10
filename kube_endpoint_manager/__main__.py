@@ -131,11 +131,19 @@ def args() -> argparse.Namespace:
 def sync_loop(config, kube_endpoint, external_endpoints):
     """Kubernetes endpoint sync loop
     """
+
+    log.info("Starting sync loop: %fs %s -> kubernetes", config.sync_period, config.endpoint_type)
+
     while True:
         time.sleep(config.sync_period)
 
+        log.info("Searching for kubernetes endpoints: %s/%s",
+                 config.kubernetes_namespace, config.kubernetes_endpoint)
         kube_endpoint.refresh()
         log.info("Kubernetes endpoints fetched:\n%s", pformat(kube_endpoint.addresses))
+
+        log.info("Searching for external endpoints "
+                 "with filters:\n%s", pformat(external_endpoints.filters))
         external_endpoints.refresh()
         log.info("External endpoint fetched:\n%s", pformat(external_endpoints.addresses))
 
