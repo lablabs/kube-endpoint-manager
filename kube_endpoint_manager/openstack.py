@@ -223,7 +223,6 @@ class Endpoints(ABCEndpoints):
         """Constructor
         """
         super().__init__(auth=auth, filters=filters)
-        self._filters = filters
         self._api = _APIClient(**auth)
         self._endpoints = self._endpoint_list()
 
@@ -280,7 +279,7 @@ class Endpoints(ABCEndpoints):
         Returns:
             (bool)
         """
-        for name, value in self._filters.items():
+        for name, value in self.filters.items():
             if hasattr(self, f'_filter_server_{name}'):
                 if not getattr(self, f'_filter_server_{name}')(server, value):
                     return False

@@ -46,6 +46,7 @@ class ABCEndpoints(ABC):
     def __init__(self, auth: dict, filters: dict, *args, **kwargs):
         """Constructor
         """
+        self._filters = filters
 
     def __bool__(self):
         if self.addresses:
@@ -61,6 +62,12 @@ class ABCEndpoints(ABC):
     def is_my_type(_type: str) -> bool:
         """(bool): Factory selector helper based on type name
         """
+
+    @property
+    def filters(self):
+        """(dict): External endpoint filters
+        """
+        return self._filters
 
     @property
     @abstractmethod
