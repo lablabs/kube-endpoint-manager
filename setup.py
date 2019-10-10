@@ -15,7 +15,7 @@ with open('requirements.txt') as f:
 
 setuptools.setup(
     name="kube_endpoint_manager",
-    version="0.0.1",
+    version="0.0.2",
     author="Martin Dojcak",
     author_email="martin.dojcak@lablabs.io",
     description="Kubernetes external endpoint manager",
