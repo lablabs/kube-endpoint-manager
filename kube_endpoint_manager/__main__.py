@@ -65,6 +65,20 @@ def args() -> argparse.Namespace:
         help="Sync loop period")
 
     parser.add(
+        '--filter-name',
+        env_var="FILTER_NAME",
+        default=None,
+        dest='filter_name',
+        help="Filter external endpoint by name (regexp)")
+
+    parser.add(
+        '--filter-metadata',
+        env_var="FILTER_METADATA",
+        nargs='?',
+        dest='filter_metadata',
+        help="Filter external endpoint by metadata in key:value format (regexp)")
+
+    parser.add(
         '--k8s-namespace',
         env_var='K8S_NAMESPACE',
         required=True,
@@ -125,6 +139,15 @@ def args() -> argparse.Namespace:
             password=_args.openstack_password,
             project_name=_args.openstack_project)
 
+    _args.filters = dict()
+    if _args.filter_name:
+        _args.filters['name'] = _args.filter_name
+
+    if _args.filter_metadata:
+        _args.filters['metadata'] = dict(
+            item.split(':') for item in _args.filter_metadata.split()
+        )
+
     return _args
 
 
@@ -179,12 +202,7 @@ def main():
     external_endpoints = external.factory(
         _type=config.endpoint_type,
         auth=config.external_auth,
-        filters={
-            'metadata': {
-                '.*service.name$': f'^{config.kubernetes_endpoint}$',
-                '.*service.namespace$': f'^{config.kubernetes_namespace}$',
-            }
-        }
+        filters=config.filters
     )
 
     sync_loop(config, kube_endpoint, external_endpoints)
