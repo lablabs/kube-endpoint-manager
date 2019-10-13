@@ -202,7 +202,7 @@ class Endpoint:
         Returns:
             (List[V1EndpointAddress]): kubernetes endpoint subset addresses
         """
-        if not self._endpoint:
+        if not self._endpoint or not self._endpoint.subsets[0].addresses:
             return []
 
         return list(self._endpoint.subsets[0].addresses)
