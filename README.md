@@ -18,6 +18,8 @@ ENV |Parameter | Description | Required | Default
 ### Openstack
 ENV |Parameter | Description | Required
 --- |--- | --- | -- |
+`FILTER_NAME` | `--filter-name` | Filter external endpoint by name (regexp) | no | None
+`FILTER_METADATA` | `--filter-metadata` | Filter external endpoint by metadata in key:value format (regexp) | no | None
 `OS_AUTH_URL` | `--os-auth-url` | Openstack authentication  | yes
 `OS_USERNAME` | `--os-username` | Openstack authentication username | no
 `OS_PASSWORD` | `--os-password` | Openstack authentication password | no
